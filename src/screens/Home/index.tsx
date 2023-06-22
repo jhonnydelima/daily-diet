@@ -1,6 +1,7 @@
 import { Container, HeaderContainer, Logo, Avatar } from './styles';
 
 import logoImg from '@assets/logo.png';
+import avatarImg from '@assets/avatar.jpeg';
 
 export function Home() {
   return (
@@ -8,12 +9,10 @@ export function Home() {
       <HeaderContainer>
         <Logo source={logoImg} />
 
-        <Avatar source={{
-          uri: 'https://avatars.githubusercontent.com/u/27383569?v=4'
-        }}/>
+        <Avatar source={avatarImg} />
       </HeaderContainer>
 
-      
+
 
     </Container>
   );
