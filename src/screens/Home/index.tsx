@@ -3,6 +3,8 @@ import { Container, HeaderContainer, Logo, Avatar } from './styles';
 import logoImg from '@assets/logo.png';
 import avatarImg from '@assets/avatar.jpeg';
 
+import { Card } from '@components/Card';
+
 export function Home() {
   return (
     <Container>
@@ -12,7 +14,7 @@ export function Home() {
         <Avatar source={avatarImg} />
       </HeaderContainer>
 
-
+      <Card showOpenButton />
 
     </Container>
   );

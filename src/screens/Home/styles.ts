@@ -14,6 +14,7 @@ export const HeaderContainer = styled.View`
 
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 36px;
 `;
 
 export const Logo = styled.Image`
@@ -25,7 +26,7 @@ export const Avatar = styled.Image`
   width: 40px;
   height: 40px;
 
-  box-sizing: border-box;
-  border: 2px solid ${({ theme }) => theme.COLORS.GRAY_200};
+  border-width: 2px;
+  border-color: ${({ theme }) => theme.COLORS.GRAY_200};
   border-radius: 50%;
 `;
