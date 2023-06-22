@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-export const Container = styled.View`
+export const Container = styled(SafeAreaView)`
   flex: 1;
 
   padding-left: 24px;
@@ -39,5 +40,15 @@ export const Label = styled.Text`
   `}
 
   margin-top: 40px;
+  margin-bottom: 8px;
+`;
+
+export const SectionTitle = styled.Text`
+  ${({ theme }) => css`
+    font-size: ${theme.FONT_SIZE.LG}px;
+    font-family: ${theme.FONT_FAMILY.BOLD};
+    color: ${theme.COLORS.GRAY_100};
+  `}
+
   margin-bottom: 8px;
 `;
