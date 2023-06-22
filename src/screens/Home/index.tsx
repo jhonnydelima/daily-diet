@@ -1,9 +1,10 @@
-import { Container, HeaderContainer, Logo, Avatar } from './styles';
+import { Container, HeaderContainer, Logo, Avatar, Label } from './styles';
 
 import logoImg from '@assets/logo.png';
 import avatarImg from '@assets/avatar.jpeg';
 
-import { Card } from '@components/Card';
+import { ButtonCard } from '@components/ButtonCard';
+import { ButtonIcon } from '@components/ButtonIcon';
 
 export function Home() {
   return (
@@ -14,7 +15,19 @@ export function Home() {
         <Avatar source={avatarImg} />
       </HeaderContainer>
 
-      <Card showOpenButton />
+      <ButtonCard
+        dietPercentage={90.86}
+        showOpenIcon
+      />
+
+      <Label>
+        Refeições
+      </Label>
+
+      <ButtonIcon
+        description='Nova refeição'
+        icon='add'
+      />
 
     </Container>
   );
