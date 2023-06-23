@@ -18,6 +18,7 @@ export const Container = styled(TouchableOpacity)`
 
   flex-direction: row;
   align-items: center;
+  /* justify-content: flex-start; */
   padding: 14px 16px 14px 12px;
 `;
 
@@ -49,10 +50,13 @@ export const Description = styled.Text`
   `}
 
   flex: 1;
+  flex-shrink: 1;
 `;
 
 export const Icon = styled(MaterialIcons).attrs<Props>(({ theme, type }) => ({
   name: 'circle',
   size: 14,
   color: type === 'IN_DIET' ? theme.COLORS.GREEN_MID : theme.COLORS.RED_MID
-}))``;
+}))`
+  margin-left: 12px;
+`;
