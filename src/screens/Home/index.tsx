@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { SectionList, View } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 
 import {
   Container,
@@ -49,6 +50,12 @@ export function Home() {
     },
   ]);
 
+  const navigation = useNavigation();
+
+  function handleOpenStatistics() {
+    navigation.navigate('summary');
+  }
+
   return (
     <Container>
       <HeaderContainer>
@@ -58,6 +65,7 @@ export function Home() {
       </HeaderContainer>
 
       <ButtonCard
+        onPress={handleOpenStatistics}
         dietPercentage={90.86}
         showOpenIcon
       />
@@ -72,7 +80,6 @@ export function Home() {
       />
 
       <SectionList
-        style={{ marginTop: 32 }}
         sections={meals}
         keyExtractor={(item, index) => item.description + index}
         renderItem={({item}) => (

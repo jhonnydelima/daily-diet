@@ -47,5 +47,6 @@ export const SectionTitle = styled.Text`
     color: ${theme.COLORS.GRAY_100};
   `}
 
+  margin-top: 32px;
   margin-bottom: 8px;
 `;
