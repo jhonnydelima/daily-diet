@@ -1,17 +1,18 @@
 import { Description } from '@components/Description';
 
-import { Container, StatisticCardTypeStyleProps } from './styles';
+import { Container, SummaryCardTypeStyleProps } from './styles';
 
 type Props = {
-  type?: StatisticCardTypeStyleProps;
+  type?: SummaryCardTypeStyleProps;
   amount: number;
   description: string;
 }
 
-export function StatisticCard({ type = 'PRIMARY', amount, description }: Props) {
+export function SummaryCard({ type = 'PRIMARY', amount, description }: Props) {
   return (
     <Container type={type}>
       <Description
+        type='SECONDARY'
         title={amount.toString()}
         subtitle={description}
       />

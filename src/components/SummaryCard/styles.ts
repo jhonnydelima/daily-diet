@@ -1,14 +1,18 @@
 import styled from 'styled-components/native';
 
-export type StatisticCardTypeStyleProps = 'PRIMARY' | 'SECONDARY' | 'TERTIARY';
+export type SummaryCardTypeStyleProps = 'PRIMARY' | 'SECONDARY' | 'TERTIARY';
 
 type Props = {
-  type: StatisticCardTypeStyleProps;
+  type: SummaryCardTypeStyleProps;
 }
 
 export const Container = styled.View<Props>`
   width: 100%;
+
   border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+
   background-color: ${
     ({ theme, type }) => (
       type === 'PRIMARY' ? theme.COLORS.GREEN_LIGHT :
