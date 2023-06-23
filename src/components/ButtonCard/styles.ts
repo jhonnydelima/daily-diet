@@ -10,6 +10,7 @@ type Props = {
 
 export const Container = styled(TouchableOpacity)<Props>`
   width: 100%;
+  padding: 20px 16px;
   border-radius: 8px;
   background-color: ${({ theme, type }) => type === 'PRIMARY' ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
 `;

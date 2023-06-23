@@ -8,7 +8,6 @@ type Props = {
 
 export const Container = styled.View`
   align-items: center;
-  padding: 20px 16px;
 `;
 
 export const Title = styled.Text<Props>`
@@ -21,7 +20,7 @@ export const Title = styled.Text<Props>`
 
 export const Subtitle = styled.Text`
   ${({ theme }) => css`
-    font-size: ${theme.FONT_SIZE.SM}px;
+    font-size: ${theme.FONT_SIZE.MD}px;
     font-family: ${theme.FONT_FAMILY.REGULAR};
     color: ${theme.COLORS.GRAY_200};
   `}
