@@ -33,7 +33,18 @@ export function Home() {
       date: '12.08.22',
       data: [
         {time: '20:00', description: 'X-tudo', type: 'OUT_OF_DIET'},
-        {time: '16:00', description: 'Vitamina de banana com whey protein', type: 'IN_DIET'}
+        {time: '16:00', description: 'Mingau de aveia com banana e pasta de amendoim', type: 'IN_DIET'},
+        {time: '12:30', description: 'Salada cesar com frango', type: 'IN_DIET'},
+        {time: '9:00', description: 'Ovos mexidos com pão e uma dose de whey', type: 'IN_DIET'},
+      ]
+    },
+    {
+      date: '11.08.22',
+      data: [
+        {time: '20:00', description: 'X-tudo', type: 'OUT_OF_DIET'},
+        {time: '16:00', description: 'Mingau de aveia com banana e pasta de amendoim', type: 'IN_DIET'},
+        {time: '12:30', description: 'Salada cesar com frango', type: 'IN_DIET'},
+        {time: '9:00', description: 'Ovos mexidos com pão e uma dose de whey', type: 'IN_DIET'},
       ]
     },
   ]);
@@ -63,7 +74,7 @@ export function Home() {
       <SectionList
         style={{ marginTop: 32 }}
         sections={meals}
-        keyExtractor={(item) => item.description}
+        keyExtractor={(item, index) => item.description + index}
         renderItem={({item}) => (
           <MealCard
             type={item.type}
