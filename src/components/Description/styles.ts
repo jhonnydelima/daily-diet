@@ -24,4 +24,6 @@ export const Subtitle = styled.Text`
     font-family: ${theme.FONT_FAMILY.REGULAR};
     color: ${theme.COLORS.GRAY_200};
   `}
+
+  text-align: center;
 `;
