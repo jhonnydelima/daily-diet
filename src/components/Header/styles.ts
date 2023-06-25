@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeft } from 'phosphor-react-native';
 
 export type HeaderTypeStyleProps = 'PRIMARY' | 'SECONDARY' | 'TERTIARY';
@@ -7,8 +8,20 @@ type Props = {
   type: HeaderTypeStyleProps;
 }
 
-export const Container = styled.View`
-  width: 100%;
+export const Container = styled(SafeAreaView)<Props>`
+  padding: 0 24px;
+  background-color: ${
+    ({ theme, type }) => (
+      type === 'PRIMARY' ? theme.COLORS.GREEN_LIGHT :
+      type === 'SECONDARY' ? theme.COLORS.RED_LIGHT :
+      theme.COLORS.GRAY_500
+    )
+  };
+`;
+
+export const Content = styled.View`
+  flex: 1;
+  margin-bottom: 24px;
 `;
 
 export const BackButton = styled.TouchableOpacity`
