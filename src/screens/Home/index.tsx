@@ -52,8 +52,12 @@ export function Home() {
 
   const navigation = useNavigation();
 
-  function handleOpenStatistics() {
+  function handleOpenSummary() {
     navigation.navigate('summary');
+  }
+
+  function handleOpenNewMeal() {
+    navigation.navigate('new');
   }
 
   return (
@@ -65,7 +69,7 @@ export function Home() {
       </HeaderContainer>
 
       <ButtonCard
-        onPress={handleOpenStatistics}
+        onPress={handleOpenSummary}
         dietPercentage={90.86}
         showOpenIcon
       />
@@ -75,6 +79,7 @@ export function Home() {
       </Label>
 
       <ButtonIcon
+        onPress={handleOpenNewMeal}
         description='Nova refeição'
         icon='add'
       />
