@@ -7,21 +7,22 @@ type Props = {
   type: SummaryTypeStyleProps;
 }
 
-export const Container = styled(SafeAreaView)<Props>`
+export const Container = styled.View`
   flex: 1;
-  background-color: ${({ theme, type }) => type === 'PRIMARY' ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
 `;
 
-export const HeaderContent = styled.View`
-  padding: 24px;
+export const HeaderContent = styled(SafeAreaView)<Props>`
+  height: 200px;
+  padding: 0 24px;
+  background-color: ${({ theme, type }) => type === 'PRIMARY' ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
 `;
 
 export const BodyContent = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.COLORS.GRAY_700};
   
+  margin-top: -20px;
   padding: 24px;
-  margin-bottom: -100px;
 
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;

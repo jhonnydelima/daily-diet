@@ -6,8 +6,8 @@ import { SummaryCard } from '@components/SummaryCard';
 
 export function Summary() {
   return (
-    <Container type='PRIMARY'>
-      <HeaderContent>
+    <Container>
+      <HeaderContent type='PRIMARY'>
         <Header type='PRIMARY' />
 
         <Description
