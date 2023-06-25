@@ -1,5 +1,6 @@
-import { Container, HeaderContent, BodyContent, Title, Row } from './styles';
+import { Container, Title, Row } from './styles';
 
+import { Body } from '@components/Body';
 import { Description } from '@components/Description';
 import { Header } from '@components/Header';
 import { SummaryCard } from '@components/SummaryCard';
@@ -7,16 +8,17 @@ import { SummaryCard } from '@components/SummaryCard';
 export function Summary() {
   return (
     <Container>
-      <HeaderContent type='PRIMARY'>
-        <Header type='PRIMARY' />
-
+      <Header
+        backgroundType='PRIMARY'
+        iconType='PRIMARY'
+      >
         <Description
           title={(90.86).toString().replace('.', ',') + '%'}
           subtitle='das refeições dentro da dieta'
         />
-      </HeaderContent>
+      </Header>
 
-      <BodyContent>
+      <Body>
         <Title>
           Estatísticas gerais
         </Title>
@@ -49,7 +51,7 @@ export function Summary() {
             description='refeições fora da dieta'
           />
         </Row>
-      </BodyContent>
+      </Body>
     </Container>
   );
 }

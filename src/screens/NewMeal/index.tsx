@@ -1,30 +1,28 @@
 import {
   Container,
-  HeaderContent,
-  Content,
   Form,
   Row,
-  DateTimeContent,
+  FormItemContainer,
   ButtonView
 } from './styles';
 
+import { Body } from '@components/Body';
 import { ButtonIcon } from '@components/ButtonIcon';
 import { DescriptionInput } from '@components/DescriptionInput';
-import { Label } from '@components/Label';
 import { Header } from '@components/Header';
 import { Input } from '@components/Input';
+import { Label } from '@components/Label';
 
 export function NewMeal() {
   return (
     <Container>
-      <HeaderContent>
-        <Header
-          type='TERTIARY'
-          title='Nova refeição'
-        />
-      </HeaderContent>
+      <Header
+        backgroundType='TERTIARY'
+        iconType='TERTIARY'
+        title='Nova refeição'
+      />
 
-      <Content>
+      <Body>
         <Form>
           <Label label='Nome' />
           <Input />
@@ -33,27 +31,33 @@ export function NewMeal() {
           <DescriptionInput />
 
           <Row>
-            <DateTimeContent>
+            <FormItemContainer>
               <Label label='Data' />
               <Input />
-            </DateTimeContent>
+            </FormItemContainer>
 
-            <DateTimeContent>
+            <FormItemContainer>
               <Label label='Hora' />
               <Input />
-            </DateTimeContent>
+            </FormItemContainer>
           </Row>
 
-          
+          <FormItemContainer>
+            <Label label='Está dentro da dieta?' />
+
+            <Row>
+
+            </Row>
+          </FormItemContainer>
+
+          <ButtonView>
+            <ButtonIcon
+              description='Cadastrar refeição'
+            />
+          </ButtonView>
 
         </Form>
-
-        <ButtonView>
-          <ButtonIcon
-            description='Cadastrar refeição'
-          />
-        </ButtonView>
-      </Content>
+      </Body>
     </Container>
   );
 }
