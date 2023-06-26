@@ -11,8 +11,8 @@ import {
   SectionTitle
 } from './styles';
 
-import { ButtonCard } from '@components/ButtonCard';
-import { ButtonIcon } from '@components/ButtonIcon';
+import { CardButton } from '@components/CardButton';
+import { IconButton } from '@components/IconButton';
 import { MealCard } from '@components/MealCard';
 import { MealCardTypeStyleProps } from '@components/MealCard/styles';
 
@@ -68,7 +68,7 @@ export function Home() {
         <Avatar source={avatarImg} />
       </HeaderContainer>
 
-      <ButtonCard
+      <CardButton
         onPress={handleOpenSummary}
         dietPercentage={90.86}
         showOpenIcon
@@ -78,7 +78,7 @@ export function Home() {
         Refeições
       </Label>
 
-      <ButtonIcon
+      <IconButton
         onPress={handleOpenNewMeal}
         description='Nova refeição'
         icon='add'
