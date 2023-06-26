@@ -2,10 +2,10 @@ import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { ArrowUpRight } from 'phosphor-react-native';
 
-export type ButtonCardTypeStyleProps = 'PRIMARY' | 'SECONDARY';
+export type CardButtonTypeStyleProps = 'PRIMARY' | 'SECONDARY';
 
 type Props = {
-  type: ButtonCardTypeStyleProps;
+  type: CardButtonTypeStyleProps;
 }
 
 export const Container = styled(TouchableOpacity)<Props>`

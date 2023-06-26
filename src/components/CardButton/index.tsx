@@ -2,15 +2,15 @@ import { TouchableOpacityProps } from 'react-native';
 
 import { Description } from '@components/Description';
 
-import { Container, OpenIcon, ButtonCardTypeStyleProps } from './styles';
+import { Container, OpenIcon, CardButtonTypeStyleProps } from './styles';
 
 type Props = TouchableOpacityProps & {
   showOpenIcon?: boolean;
-  type?: ButtonCardTypeStyleProps;
+  type?: CardButtonTypeStyleProps;
   dietPercentage: number;
 }
 
-export function ButtonCard({
+export function CardButton({
   showOpenIcon = false,
   type = 'PRIMARY',
   dietPercentage,
