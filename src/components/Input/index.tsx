@@ -1,10 +1,16 @@
-import { TextInputProps } from 'react-native';
+import { RefObject } from 'react';
+import { TextInput, TextInputProps } from 'react-native';
 
 import { Container } from './styles';
 
-export function Input({ ...rest }: TextInputProps) {
+type Props = TextInputProps & {
+  inputRef?: RefObject<TextInput>;
+}
+
+export function Input({ inputRef, ...rest }: Props) {
   return (
     <Container
+      ref={inputRef}
       autoCorrect={false}
       numberOfLines={1}
       {...rest}
