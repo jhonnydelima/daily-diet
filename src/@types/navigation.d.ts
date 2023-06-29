@@ -4,8 +4,7 @@ export declare global {
       home: undefined;
       summary: undefined;
       new: undefined;
-      in_diet: undefined;
-      out_of_diet: undefined;
+      feedback: undefined;
       meal: undefined;
       edit: undefined;
     }
