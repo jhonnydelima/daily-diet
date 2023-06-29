@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
-import { ptBR } from "date-fns/locale"
+import { ptBR } from 'date-fns/locale';
 
 import {
   Container,
@@ -26,6 +27,12 @@ export function NewMeal() {
   const [isTimePickerVisible, setIsTimePickerVisible] = useState(false);
   const [isInDiet, setIsInDiet] = useState(false);
   const [isOutOfDiet, setIsOutOfDiet] = useState(false);
+
+  const navigation = useNavigation();
+
+  function handleGiveFeedback() {
+    navigation.navigate('feedback');
+  }
 
   function showDatePicker() {
     setIsDatePickerVisible(true);
@@ -135,6 +142,7 @@ export function NewMeal() {
 
           <ButtonView>
             <IconButton
+              onPress={handleGiveFeedback}
               description='Cadastrar refeição'
             />
           </ButtonView>
