@@ -30,6 +30,4 @@ export const Description = styled.Text<Props>`
     font-size: ${theme.FONT_SIZE.SM}px;
     font-family: ${theme.FONT_FAMILY.BOLD};
   `}
-
-  margin-left: 12px;
 `;

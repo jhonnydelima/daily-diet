@@ -22,7 +22,12 @@ export function IconButton({description, icon, type = 'PRIMARY', ...rest}: Props
         />
       )}
       
-      <Description type={type}>
+      <Description
+        type={type}
+        style={{
+          marginLeft: icon ? 12 : 0
+        }}
+      >
         {description}
       </Description>
     </Container>
