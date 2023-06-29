@@ -1,8 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 
-import { Container, Button } from './styles';
+import { Container, Title, Subtitle, Image, Button } from './styles';
 
 import { IconButton } from '@components/IconButton';
+
+import positiveFeedbackImg from '@assets/positive-feedback.png';
+import negativeFeedbackImg from '@assets/negative-feedback.png';
 
 export function Feedback() {
   const navigation = useNavigation();
@@ -13,6 +16,17 @@ export function Feedback() {
 
   return (
     <Container>
+      <Title
+        type='PRIMARY'
+      >
+        Continue assim!
+      </Title>
+
+      <Subtitle>
+        Você continua dentro da dieta. Muito bem!
+      </Subtitle>
+
+      <Image source={positiveFeedbackImg} />
 
       <Button>
         <IconButton

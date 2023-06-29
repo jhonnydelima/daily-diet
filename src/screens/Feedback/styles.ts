@@ -1,11 +1,41 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+export type FeedbackTypeStyleProps = 'PRIMARY' | 'SECONDARY';
+
+type Props = {
+  type: FeedbackTypeStyleProps;
+}
 
 export const Container = styled(SafeAreaView)`
   flex: 1;
   background-color: ${({ theme }) => theme.COLORS.GRAY_700};
   justify-content: center;
   align-items: center;
+`;
+
+export const Title = styled.Text<Props>`
+  ${({ theme, type }) => css`
+    color: ${type === 'PRIMARY' ? theme.COLORS.GREEN_DARK : theme.COLORS.GREEN_DARK};
+    font-size: ${theme.FONT_SIZE.XL}px;
+    font-family: ${theme.FONT_FAMILY.BOLD};
+  `}
+
+  margin-bottom: 4px;
+`;
+
+export const Subtitle = styled.Text`
+  ${({ theme }) => css`
+    color: ${theme.COLORS.GRAY_100};
+    font-size: ${theme.FONT_SIZE.MD}px;
+    font-family: ${theme.FONT_FAMILY.REGULAR};
+  `}
+
+  margin-bottom: 40px;
+`;
+
+export const Image = styled.Image`
+  margin-bottom: 32px;
 `;
 
 export const Button = styled.View`
