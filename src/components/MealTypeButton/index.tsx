@@ -5,13 +5,13 @@ import { MealTypeButtonTypeStyleProps, Container, Icon, Title } from './styles';
 type Props = TouchableOpacityProps & {
   title: string;
   type?: MealTypeButtonTypeStyleProps;
-  iconType?: MealTypeButtonTypeStyleProps;
+  isActive: boolean;
 }
 
-export function MealTypeButton({ title, type, iconType, ...rest }: Props) {
+export function MealTypeButton({ title, type, isActive, ...rest }: Props) {
   return (
-    <Container type={type} {...rest}>
-      <Icon type={iconType} />
+    <Container type={type} isActive={isActive} {...rest}>
+      <Icon type={type} />
 
       <Title>
         {title}
