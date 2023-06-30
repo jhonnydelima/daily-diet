@@ -19,19 +19,19 @@ import { IconButton } from '@components/IconButton';
 import { Input } from '@components/Input';
 import { Label } from '@components/Label';
 import { MealTypeButton } from '@components/MealTypeButton';
+import { MealTypeButtonTypeStyleProps } from '@components/MealTypeButton/styles';
 
 export function NewMeal() {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const [isTimePickerVisible, setIsTimePickerVisible] = useState(false);
-  const [isInDiet, setIsInDiet] = useState(false);
-  const [isOutOfDiet, setIsOutOfDiet] = useState(false);
+  const [mealType, setMealType] = useState<MealTypeButtonTypeStyleProps>(undefined);
 
   const navigation = useNavigation();
 
   function handleGiveFeedback() {
-    navigation.navigate('feedback');
+    navigation.navigate('feedback', { type: 'IN_DIET' });
   }
 
   function showDatePicker() {
@@ -62,14 +62,8 @@ export function NewMeal() {
     hideTimePicker();
   };
 
-  function handleInDietType() {
-    setIsInDiet(prevState => !prevState);
-    setIsOutOfDiet(false);
-  }
-
-  function handleOutOfDietType() {
-    setIsOutOfDiet(prevState => !prevState);
-    setIsInDiet(false);
+  function handleMealType(type: MealTypeButtonTypeStyleProps) {
+    setMealType(type);
   }
 
   return (
@@ -125,17 +119,17 @@ export function NewMeal() {
 
             <Row>
               <MealTypeButton
-                onPress={handleInDietType}
+                onPress={() => handleMealType('IN_DIET')}
                 title='Sim'
-                type={isInDiet ? 'IN_DIET' : undefined}
-                iconType='IN_DIET'
+                type='IN_DIET'
+                isActive={mealType === 'IN_DIET'}
               />
 
               <MealTypeButton
-                onPress={handleOutOfDietType}
+                onPress={() => handleMealType('OUT_OF_DIET')}
                 title='Não'
-                type={isOutOfDiet ? 'OUT_OF_DIET' : undefined}
-                iconType='OUT_OF_DIET'
+                type='OUT_OF_DIET'
+                isActive={mealType === 'OUT_OF_DIET'}
               />
             </Row>
           </FormItemContainer>
