@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export type FeedbackTypeStyleProps = 'PRIMARY' | 'SECONDARY';
+export type FeedbackTypeStyleProps = 'IN_DIET' | 'OUT_OF_DIET';
 
 type Props = {
   type: FeedbackTypeStyleProps;
@@ -16,7 +16,7 @@ export const Container = styled(SafeAreaView)`
 
 export const Title = styled.Text<Props>`
   ${({ theme, type }) => css`
-    color: ${type === 'PRIMARY' ? theme.COLORS.GREEN_DARK : theme.COLORS.GREEN_DARK};
+    color: ${type === 'IN_DIET' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
     font-size: ${theme.FONT_SIZE.XL}px;
     font-family: ${theme.FONT_FAMILY.BOLD};
   `}
@@ -31,7 +31,12 @@ export const Subtitle = styled.Text`
     font-family: ${theme.FONT_FAMILY.REGULAR};
   `}
 
+  text-align: center;
   margin-bottom: 40px;
+`;
+
+export const Strong = styled.Text`
+  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
 `;
 
 export const Image = styled.Image`
