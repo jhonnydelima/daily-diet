@@ -22,16 +22,16 @@ export const Container = styled(TouchableOpacity)<Props>`
   border-width: ${({ type, isActive }) => isActive && type !== undefined && 1}px;
 
   ${({ theme, type, isActive }) => css`
-    background-color: ${(
+    background-color: ${
       isActive && type === 'IN_DIET' ? theme.COLORS.GREEN_LIGHT :
       isActive && type === 'OUT_OF_DIET' ? theme.COLORS.RED_LIGHT :
       theme.COLORS.GRAY_600
-    )};
-    border-color: ${(
+    };
+    border-color: ${
       isActive && type === 'IN_DIET' ? theme.COLORS.GREEN_DARK :
       isActive && type === 'OUT_OF_DIET' ? theme.COLORS.RED_DARK :
       undefined
-    )};
+    };
   `}
 `;
 
