@@ -60,6 +60,10 @@ export function Home() {
     navigation.navigate('new');
   }
 
+  function handleOpenMeal(type: MealCardTypeStyleProps) {
+    navigation.navigate('meal', { type })
+  }
+
   return (
     <Container>
       <HeaderContainer>
@@ -92,6 +96,7 @@ export function Home() {
             type={item.type}
             time={item.time}
             description={item.description}
+            onPress={() => handleOpenMeal(item.type)}
           />
         )}
         renderSectionHeader={({ section: {date} }) => (

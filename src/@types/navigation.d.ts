@@ -5,9 +5,11 @@ export declare global {
       summary: undefined;
       new: undefined;
       feedback: {
+        type: 'IN_DIET' | 'OUT_OF_DIET' | undefined;
+      }
+      meal: {
         type: 'IN_DIET' | 'OUT_OF_DIET';
       }
-      meal: undefined;
       edit: undefined;
     }
   }
