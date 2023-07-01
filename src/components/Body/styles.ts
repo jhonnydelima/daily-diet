@@ -10,5 +10,5 @@ export const Container = styled.View`
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   
-  align-items: center;
+  align-items: flex-start;
 `;

@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { HeaderTypeStyleProps, Container, Content, BackButton, BackIcon, Title } from './styles';
 
 type Props = {
-  backgroundType?:HeaderTypeStyleProps;
+  backgroundType?: HeaderTypeStyleProps;
   iconType?: HeaderTypeStyleProps;
   title?: string;
   children?: React.ReactNode;
