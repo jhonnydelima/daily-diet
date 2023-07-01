@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export type FeedbackTypeStyleProps = 'IN_DIET' | 'OUT_OF_DIET';
+export type FeedbackTypeStyleProps = 'IN_DIET' | 'OUT_OF_DIET' | undefined;
 
 type Props = {
   type: FeedbackTypeStyleProps;

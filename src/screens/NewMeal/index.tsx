@@ -19,19 +19,19 @@ import { IconButton } from '@components/IconButton';
 import { Input } from '@components/Input';
 import { Label } from '@components/Label';
 import { MealTypeButton } from '@components/MealTypeButton';
-import { MealTypeButtonTypeStyleProps } from '@components/MealTypeButton/styles';
+import { FeedbackTypeStyleProps } from '@screens/Feedback/styles';
 
 export function NewMeal() {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const [isTimePickerVisible, setIsTimePickerVisible] = useState(false);
-  const [mealType, setMealType] = useState<MealTypeButtonTypeStyleProps>(undefined);
+  const [mealType, setMealType] = useState<FeedbackTypeStyleProps>(undefined);
 
   const navigation = useNavigation();
 
   function handleGiveFeedback() {
-    navigation.navigate('feedback', { type: 'IN_DIET' });
+    navigation.navigate('feedback', { type: mealType });
   }
 
   function showDatePicker() {
@@ -62,7 +62,7 @@ export function NewMeal() {
     hideTimePicker();
   };
 
-  function handleMealType(type: MealTypeButtonTypeStyleProps) {
+  function handleMealType(type: FeedbackTypeStyleProps) {
     setMealType(type);
   }
 
