@@ -1,4 +1,6 @@
-import { useRoute } from '@react-navigation/native';
+import { useState } from 'react';
+import { Alert, Modal } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { Body } from '@components/Body';
 import { Header } from '@components/Header';
@@ -12,7 +14,13 @@ import {
   InfoTitle,
   Description,
   TagDescription,
-  ButtonsView
+  ButtonsView,
+  ModalContainer,
+  ModalContent,
+  ModalTextContainer,
+  ModalText,
+  ModalRow,
+  ModalButtonContainer
 } from './styles';
 
 type RouteParams = {
@@ -20,8 +28,18 @@ type RouteParams = {
 }
 
 export function Meal() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const navigation = useNavigation();
   const route = useRoute();
   const { type } = route.params as RouteParams;
+
+  function handleEditMeal() {
+    navigation.navigate('edit');
+  }
+
+  function handleDeleteMeal() {
+
+  }
 
   return (
     <Container>
@@ -59,14 +77,53 @@ export function Meal() {
             <IconButton
               icon='border-color'
               description='Editar refeição'
+              onPress={() => handleEditMeal()}
             />
 
             <IconButton
               type='SECONDARY'
               icon='delete-outline'
               description='Excluir refeição'
+              onPress={() => setIsModalVisible(true)}
             />
           </ButtonsView>
+
+          <Modal
+            animationType='fade'
+            transparent
+            visible={isModalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setIsModalVisible(false);
+            }}
+          >
+            <ModalContainer>
+              <ModalContent>
+                <ModalTextContainer>
+                  <ModalText>
+                    Deseja realmente excluir o registro da refeição?
+                  </ModalText>
+                </ModalTextContainer>
+
+                <ModalRow>
+                  <ModalButtonContainer>
+                    <IconButton
+                      type='SECONDARY'
+                      description='Cancelar'
+                      onPress={() => setIsModalVisible(false)}
+                    />
+                  </ModalButtonContainer>
+                  
+                  <ModalButtonContainer>
+                    <IconButton
+                      description='Sim, excluir'
+                      onPress={() => handleDeleteMeal}
+                    />
+                  </ModalButtonContainer>
+                </ModalRow>
+              </ModalContent>
+            </ModalContainer>
+          </Modal>
         </Content>
       </Body>
     </Container>
