@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { SectionList, View } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
 import {
   Container,
@@ -29,6 +29,7 @@ type MealType = {
 }
 
 export function Home() {
+  const [isLoading, setIsLoading] = useState(true);
   const [meals, setMeals] = useState<MealType[]>([
     {
       date: '12.08.22',
@@ -63,6 +64,25 @@ export function Home() {
   function handleOpenMeal(type: MealCardTypeStyleProps) {
     navigation.navigate('meal', { type })
   }
+
+  function fetchMeals() {
+    try {
+      setIsLoading(true);
+
+      // const data = await mealGetAll();
+      // setMeals(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchMeals();
+    }, [])
+  );
 
   return (
     <Container>
