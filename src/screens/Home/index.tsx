@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { SectionList, View } from 'react-native';
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import {
   Container,
@@ -13,43 +13,25 @@ import {
 
 import { CardButton } from '@components/CardButton';
 import { IconButton } from '@components/IconButton';
+import { Loading } from '@components/Loading';
 import { MealCard } from '@components/MealCard';
 import { MealCardTypeStyleProps } from '@components/MealCard/styles';
+
+import { mealGetAll } from '@storage/meal/mealGetAll';
+import { MealStorageDTO } from '@storage/meal/MealStorageDTO';
+import { generate } from '@utils/SectionListGenerator';
 
 import logoImg from '@assets/logo.png';
 import avatarImg from '@assets/avatar.jpeg';
 
 type MealType = {
   date: string;
-  data: {
-    time: string;
-    description: string;
-    type: MealCardTypeStyleProps;
-  }[]
+  data: MealStorageDTO[];
 }
 
 export function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const [meals, setMeals] = useState<MealType[]>([
-    {
-      date: '12.08.22',
-      data: [
-        {time: '20:00', description: 'X-tudo', type: 'OUT_OF_DIET'},
-        {time: '16:00', description: 'Mingau de aveia com banana e pasta de amendoim', type: 'IN_DIET'},
-        {time: '12:30', description: 'Salada cesar com frango', type: 'IN_DIET'},
-        {time: '9:00', description: 'Ovos mexidos com pão e uma dose de whey', type: 'IN_DIET'},
-      ]
-    },
-    {
-      date: '11.08.22',
-      data: [
-        {time: '20:00', description: 'X-tudo', type: 'OUT_OF_DIET'},
-        {time: '16:00', description: 'Mingau de aveia com banana e pasta de amendoim', type: 'IN_DIET'},
-        {time: '12:30', description: 'Salada cesar com frango', type: 'IN_DIET'},
-        {time: '9:00', description: 'Ovos mexidos com pão e uma dose de whey', type: 'IN_DIET'},
-      ]
-    },
-  ]);
+  const [meals, setMeals] = useState<MealType[]>([]);
 
   const navigation = useNavigation();
 
@@ -65,12 +47,15 @@ export function Home() {
     navigation.navigate('meal', { type })
   }
 
-  function fetchMeals() {
+  async function fetchMeals() {
     try {
       setIsLoading(true);
 
-      // const data = await mealGetAll();
-      // setMeals(data);
+      const data = await mealGetAll();
+
+      const sectionListData = generate(data);
+
+      setMeals(sectionListData);
     } catch (error) {
       console.log(error);
     } finally {
@@ -108,24 +93,28 @@ export function Home() {
         icon='add'
       />
 
-      <SectionList
-        sections={meals}
-        keyExtractor={(item, index) => item.description + index}
-        renderItem={({item}) => (
-          <MealCard
-            type={item.type}
-            time={item.time}
-            description={item.description}
-            onPress={() => handleOpenMeal(item.type)}
-          />
-        )}
-        renderSectionHeader={({ section: {date} }) => (
-          <SectionTitle>{date}</SectionTitle>
-        )}
-        ItemSeparatorComponent={() => (
-          <View style={{ marginBottom: 12 }} />
-        )}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <SectionList
+          sections={meals}
+          keyExtractor={(item, index) => item.description + index}
+          renderItem={({item}) => (
+            <MealCard
+              type={item.type}
+              time={item.time}
+              description={item.description}
+              onPress={() => handleOpenMeal(item.type)}
+            />
+          )}
+          renderSectionHeader={({ section: { date } }) => (
+            <SectionTitle>{date}</SectionTitle>
+          )}
+          ItemSeparatorComponent={() => (
+            <View style={{ marginBottom: 12 }} />
+          )}
+        />
+      )}
     </Container>
   );
 }
