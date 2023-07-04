@@ -7,7 +7,7 @@ export function generate(meals: MealStorageDTO[]) {
 }
 
 function getDates(meals: MealStorageDTO[]) {
-	const dates: string[] = meals.map(({ date }) => date).sort();
+	const dates: string[] = [...new Set(meals.map(({ date }) => date))].sort();
   return dates;
 }
 
