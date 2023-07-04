@@ -15,7 +15,6 @@ import { CardButton } from '@components/CardButton';
 import { IconButton } from '@components/IconButton';
 import { Loading } from '@components/Loading';
 import { MealCard } from '@components/MealCard';
-import { MealCardTypeStyleProps } from '@components/MealCard/styles';
 
 import { mealGetAll } from '@storage/meal/mealGetAll';
 import { MealStorageDTO } from '@storage/meal/MealStorageDTO';
@@ -43,8 +42,8 @@ export function Home() {
     navigation.navigate('new');
   }
 
-  function handleOpenMeal(type: MealCardTypeStyleProps) {
-    navigation.navigate('meal', { type })
+  function handleOpenMeal(id: string) {
+    navigation.navigate('meal', { id })
   }
 
   async function fetchMeals() {
@@ -103,8 +102,8 @@ export function Home() {
             <MealCard
               type={item.type}
               time={item.time}
-              description={item.description}
-              onPress={() => handleOpenMeal(item.type)}
+              description={item.name}
+              onPress={() => handleOpenMeal(item.id)}
             />
           )}
           renderSectionHeader={({ section: { date } }) => (

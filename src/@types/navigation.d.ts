@@ -8,7 +8,7 @@ export declare global {
         type: 'IN_DIET' | 'OUT_OF_DIET' | undefined;
       }
       meal: {
-        type: 'IN_DIET' | 'OUT_OF_DIET';
+        id: string;
       }
       edit: undefined;
     }
