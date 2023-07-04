@@ -1,5 +1,5 @@
 export type MealStorageDTO = {
-  uuid: string;
+  id: string;
   name: string;
   description: string;
   date: string;

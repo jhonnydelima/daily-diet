@@ -22,7 +22,7 @@ import { MealTypeButton } from '@components/MealTypeButton';
 import { Container, Form, Row, FormItemContainer, ButtonView } from './styles';
 
 const mealSchema = object({
-  uuid: string().required(),
+  id: string().required(),
   name: string().required('O campo nome é obrigatório.'),
   description: string().required('O campo descrição é obrigatório.'),
   date: string().required('Selecione a data.'),
@@ -75,7 +75,7 @@ export function NewMeal() {
 
   async function handleAddMeal() {
     const newMeal = {
-      uuid: uuidv4(),
+      id: uuidv4(),
       name,
       description,
       date,
