@@ -18,7 +18,6 @@ export function CardButton({
 }: Props) {
   return (
     <Container
-      onPress={() => console.log("TEST")}
       type={type}
       {...rest}
     >

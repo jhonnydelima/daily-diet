@@ -18,7 +18,8 @@ import { MealCard } from '@components/MealCard';
 
 import { mealGetAll } from '@storage/meal/mealGetAll';
 import { MealStorageDTO } from '@storage/meal/MealStorageDTO';
-import { generate } from '@utils/SectionListGenerator';
+import { MealSectionListGenerator } from '@utils/MealSectionListGenerator';
+import { StatisticsGenerator } from '@utils/StatisticsGenerator';
 
 import logoImg from '@assets/logo.png';
 import avatarImg from '@assets/avatar.jpeg';
@@ -31,6 +32,7 @@ type MealType = {
 export function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [meals, setMeals] = useState<MealType[]>([]);
+  const [percentageDiet, setPercentageDiet] = useState(0);
 
   const navigation = useNavigation();
 
@@ -52,9 +54,11 @@ export function Home() {
 
       const data = await mealGetAll();
 
-      const sectionListData = generate(data);
+      const sectionListGenerator = new MealSectionListGenerator(data);
+      setMeals(sectionListGenerator.generate());
 
-      setMeals(sectionListData);
+      const statistics = new StatisticsGenerator(data);
+      setPercentageDiet((statistics.mealsInDiet * 100) / data.length);
     } catch (error) {
       console.log(error);
     } finally {
@@ -78,7 +82,8 @@ export function Home() {
 
       <CardButton
         onPress={handleOpenStatistics}
-        dietPercentage={90.86}
+        dietPercentage={percentageDiet}
+        type={percentageDiet > 50 ? 'PRIMARY' : 'SECONDARY'}
         showOpenIcon
       />
 
