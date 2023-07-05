@@ -1,14 +1,14 @@
 import { Description } from '@components/Description';
 
-import { Container, SummaryCardTypeStyleProps } from './styles';
+import { Container, StatisticsCardTypeStyleProps } from './styles';
 
 type Props = {
-  type?: SummaryCardTypeStyleProps;
+  type?: StatisticsCardTypeStyleProps;
   amount: number;
   description: string;
 }
 
-export function SummaryCard({ type = 'PRIMARY', amount, description }: Props) {
+export function StatisticsCard({ type = 'PRIMARY', amount, description }: Props) {
   return (
     <Container type={type}>
       <Description

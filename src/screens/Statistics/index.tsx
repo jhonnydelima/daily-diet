@@ -3,9 +3,9 @@ import { Container, Title, Row } from './styles';
 import { Body } from '@components/Body';
 import { Description } from '@components/Description';
 import { Header } from '@components/Header';
-import { SummaryCard } from '@components/SummaryCard';
+import { StatisticsCard } from '@components/StatisticsCard';
 
-export function Summary() {
+export function Statistics() {
   return (
     <Container>
       <Header
@@ -24,7 +24,7 @@ export function Summary() {
         </Title>
 
         <Row>
-          <SummaryCard
+          <StatisticsCard
             type='TERTIARY'
             amount={22}
             description='melhor sequência de pratos dentro da dieta'
@@ -32,7 +32,7 @@ export function Summary() {
         </Row>
 
         <Row>
-          <SummaryCard
+          <StatisticsCard
             type='TERTIARY'
             amount={109}
             description='refeições registradas'
@@ -40,12 +40,12 @@ export function Summary() {
         </Row>
 
         <Row>
-          <SummaryCard
+          <StatisticsCard
             amount={99}
             description='refeições dentro da dieta'
           />
 
-          <SummaryCard
+          <StatisticsCard
             type='SECONDARY'
             amount={10}
             description='refeições fora da dieta'

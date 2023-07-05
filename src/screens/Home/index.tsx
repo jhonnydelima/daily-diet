@@ -34,8 +34,8 @@ export function Home() {
 
   const navigation = useNavigation();
 
-  function handleOpenSummary() {
-    navigation.navigate('summary');
+  function handleOpenStatistics() {
+    navigation.navigate('statistics');
   }
 
   function handleOpenNewMeal() {
@@ -77,7 +77,7 @@ export function Home() {
       </HeaderContainer>
 
       <CardButton
-        onPress={handleOpenSummary}
+        onPress={handleOpenStatistics}
         dietPercentage={90.86}
         showOpenIcon
       />

@@ -1,9 +1,9 @@
 import styled from 'styled-components/native';
 
-export type SummaryCardTypeStyleProps = 'PRIMARY' | 'SECONDARY' | 'TERTIARY';
+export type StatisticsCardTypeStyleProps = 'PRIMARY' | 'SECONDARY' | 'TERTIARY';
 
 type Props = {
-  type: SummaryCardTypeStyleProps;
+  type: StatisticsCardTypeStyleProps;
 }
 
 export const Container = styled.View<Props>`
