@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { v4 as uuidv4 } from 'uuid';
+import { object, string, mixed } from 'yup';
 
 import {
   Container,
@@ -18,22 +21,41 @@ import { Header } from '@components/Header';
 import { IconButton } from '@components/IconButton';
 import { Input } from '@components/Input';
 import { Label } from '@components/Label';
+import { Loading } from '@components/Loading';
 import { MealTypeButton } from '@components/MealTypeButton';
+import { Modal } from '@components/Modal';
 import { FeedbackTypeStyleProps } from '@screens/Feedback/styles';
+import { mealGetById } from '@storage/meal/mealGetById';
+import { mealRemoveById } from '@storage/meal/mealRemoveById';
+import { mealCreate } from '@storage/meal/mealCreate';
+
+type RouteParams = {
+  id: string;
+}
+
+const mealSchema = object({
+  id: string().required(),
+  name: string().required('O campo nome é obrigatório.'),
+  description: string().required('O campo descrição é obrigatório.'),
+  date: string().required('Selecione a data.'),
+  time: string().required('Selecione a hora.'),
+  type: mixed<'IN_DIET' | 'OUT_OF_DIET'>().required('Selecione um tipo de refeição.'),
+});
 
 export function EditMeal() {
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const [isTimePickerVisible, setIsTimePickerVisible] = useState(false);
   const [mealType, setMealType] = useState<FeedbackTypeStyleProps>(undefined);
   const [isLoading, setLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const navigation = useNavigation();
-
-  function handleSaveChanges() {
-    navigation.navigate('home');
-  }
+  const route = useRoute();
+  const { id } = route.params as RouteParams;
 
   function showDatePicker() {
     setIsDatePickerVisible(true);
@@ -67,12 +89,43 @@ export function EditMeal() {
     setMealType(type);
   }
 
-  function fetchMealById() {
+  async function handleSaveChanges() {
+    const newMeal = {
+      id: uuidv4(),
+      name,
+      description,
+      date,
+      time,
+      type: mealType,
+    }
+
+    try {
+      const parsedMeal = await mealSchema.validate(
+        newMeal,
+        { strict: true },
+      );
+
+      await mealRemoveById(id);
+      await mealCreate(parsedMeal);
+      navigation.navigate('home');
+    } catch (error) {
+      Alert.alert("Refeição", error.message);
+      console.log(error);
+    }
+  }
+
+  async function fetchMeal() {
     try {
       setLoading(true);
 
-
+      const meal = await mealGetById(id);
+      setName(meal?.name as string);
+      setDescription(meal?.description as string);
+      setDate(meal?.date as string);
+      setTime(meal?.time as string);
+      setMealType(meal?.type);
     } catch (error) {
+      Alert.alert("Editar refeição", "Não foi possível carregar os dados da refeição.");
       console.log(error);
     } finally {
       setLoading(false);
@@ -80,7 +133,7 @@ export function EditMeal() {
   }
 
   useEffect(() => {
-    fetchMealById();
+    fetchMeal();
   }, [])
 
   return (
@@ -92,73 +145,90 @@ export function EditMeal() {
       />
 
       <Body>
-        <Form>
-          <Label label='Nome' />
-          <Input />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Form>
+            <Label label='Nome' />
+            <Input
+              value={name}
+              onChangeText={setName}
+            />
 
-          <Label label='Descrição' />
-          <DescriptionInput />
-
-          <Row>
-            <FormItemContainer>
-              <Label label='Data' />
-              <Input
-                onPressIn={showDatePicker}
-                value={date.toString()}
-              />
-
-              <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                onConfirm={handleConfirmDate}
-                onCancel={hideDatePicker}
-              />
-            </FormItemContainer>
-
-            <FormItemContainer>
-              <Label label='Hora' />
-              <Input
-                onPressIn={showTimePicker}
-                value={time.toString()}
-              />
-
-              <DateTimePickerModal
-                isVisible={isTimePickerVisible}
-                mode="time"
-                onConfirm={handleConfirmTime}
-                onCancel={hideTimePicker}
-              />
-            </FormItemContainer>
-          </Row>
-
-          <FormItemContainer>
-            <Label label='Está dentro da dieta?' />
+            <Label label='Descrição' />
+            <DescriptionInput
+              value={description}
+              onChangeText={setDescription}
+            />
 
             <Row>
-              <MealTypeButton
-                onPress={() => handleMealType('IN_DIET')}
-                title='Sim'
-                type='IN_DIET'
-                isActive={mealType === 'IN_DIET'}
-              />
+              <FormItemContainer>
+                <Label label='Data' />
+                <Input
+                  onPressIn={showDatePicker}
+                  value={date.toString()}
+                />
 
-              <MealTypeButton
-                onPress={() => handleMealType('OUT_OF_DIET')}
-                title='Não'
-                type='OUT_OF_DIET'
-                isActive={mealType === 'OUT_OF_DIET'}
-              />
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="date"
+                  onConfirm={handleConfirmDate}
+                  onCancel={hideDatePicker}
+                />
+              </FormItemContainer>
+
+              <FormItemContainer>
+                <Label label='Hora' />
+                <Input
+                  onPressIn={showTimePicker}
+                  value={time.toString()}
+                />
+
+                <DateTimePickerModal
+                  isVisible={isTimePickerVisible}
+                  mode="time"
+                  onConfirm={handleConfirmTime}
+                  onCancel={hideTimePicker}
+                />
+              </FormItemContainer>
             </Row>
-          </FormItemContainer>
 
-          <ButtonView>
-            <IconButton
-              onPress={handleSaveChanges}
-              description='Salvar alterações'
+            <FormItemContainer>
+              <Label label='Está dentro da dieta?' />
+
+              <Row>
+                <MealTypeButton
+                  onPress={() => handleMealType('IN_DIET')}
+                  title='Sim'
+                  type='IN_DIET'
+                  isActive={mealType === 'IN_DIET'}
+                />
+
+                <MealTypeButton
+                  onPress={() => handleMealType('OUT_OF_DIET')}
+                  title='Não'
+                  type='OUT_OF_DIET'
+                  isActive={mealType === 'OUT_OF_DIET'}
+                />
+              </Row>
+            </FormItemContainer>
+
+            <ButtonView>
+              <IconButton
+                onPress={() => setIsModalVisible(true)}
+                description='Salvar alterações'
+              />
+            </ButtonView>
+
+            <Modal
+              modalText="Deseja realmente atualizar o registro da refeição?"
+              isModalVisible={isModalVisible}
+              setModalState={setIsModalVisible}
+              onConfirmPress={handleSaveChanges}
             />
-          </ButtonView>
-
-        </Form>
+          </Form>
+        )}
+        
       </Body>
     </Container>
   );

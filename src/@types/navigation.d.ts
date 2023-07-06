@@ -10,7 +10,9 @@ export declare global {
       meal: {
         id: string;
       }
-      edit: undefined;
+      edit: {
+        id: string;
+      };
     }
   }
 }
