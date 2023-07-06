@@ -52,7 +52,7 @@ export function Statistics() {
             iconType={headerType}
           >
             <Description
-              title={percentageInDiet.toString().replace('.', ',') + '%'}
+              title={percentageInDiet.toFixed(2).replace('.', ',') + '%'}
               subtitle='das refeições dentro da dieta'
             />
           </Header>

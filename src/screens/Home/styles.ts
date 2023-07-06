@@ -1,5 +1,11 @@
+import { TouchableOpacity } from 'react-native';
 import styled, { css } from 'styled-components/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ArrowUpRight } from 'phosphor-react-native';
+
+type CardButtonTypeStyleProps = {
+  type: 'PRIMARY' | 'SECONDARY';
+}
 
 export const Container = styled(SafeAreaView)`
   flex: 1;
@@ -27,6 +33,22 @@ export const Avatar = styled.Image`
   border-width: 2px;
   border-color: ${({ theme }) => theme.COLORS.GRAY_200};
   border-radius: 50px;
+`;
+
+export const CardButton = styled(TouchableOpacity)<CardButtonTypeStyleProps>`
+  width: 100%;
+  padding: 20px 16px;
+  border-radius: 8px;
+  background-color: ${({ theme, type }) => type === 'PRIMARY' ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
+`;
+
+export const OpenIcon = styled(ArrowUpRight).attrs<CardButtonTypeStyleProps>(({ theme, type }) => ({
+  size: 24,
+  color: type === 'PRIMARY' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK
+}))`
+  position: absolute;
+  right: 8px;
+  top: 8px;
 `;
 
 export const Label = styled.Text`

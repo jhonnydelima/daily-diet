@@ -7,11 +7,13 @@ import {
   HeaderContainer,
   Logo,
   Avatar,
+  CardButton,
+  OpenIcon,
   Label,
   SectionTitle
 } from './styles';
 
-import { CardButton } from '@components/CardButton';
+import { Description } from '@components/Description';
 import { IconButton } from '@components/IconButton';
 import { Loading } from '@components/Loading';
 import { MealCard } from '@components/MealCard';
@@ -32,7 +34,8 @@ type MealType = {
 export function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [meals, setMeals] = useState<MealType[]>([]);
-  const [percentageDiet, setPercentageDiet] = useState(0);
+  const [dietPercentage, setDietPercentage] = useState(0);
+  const cardButtonType = dietPercentage > 50 ? 'PRIMARY' : 'SECONDARY';
 
   const navigation = useNavigation();
 
@@ -58,7 +61,7 @@ export function Home() {
       setMeals(sectionListGenerator.generate());
 
       const statistics = new StatisticsGenerator(data);
-      setPercentageDiet((statistics.mealsInDiet * 100) / data.length);
+      setDietPercentage((statistics.mealsInDiet * 100) / data.length);
     } catch (error) {
       console.log(error);
     } finally {
@@ -81,11 +84,16 @@ export function Home() {
       </HeaderContainer>
 
       <CardButton
+        type={cardButtonType}
         onPress={handleOpenStatistics}
-        dietPercentage={percentageDiet}
-        type={percentageDiet > 50 ? 'PRIMARY' : 'SECONDARY'}
-        showOpenIcon
-      />
+      >
+        <OpenIcon type={cardButtonType} />
+
+        <Description
+          title={dietPercentage.toFixed(2).replace('.', ',') + '%'}
+          subtitle='das refeições dentro da dieta'
+        />
+      </CardButton>
 
       <Label>
         Refeições
