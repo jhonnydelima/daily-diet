@@ -2,11 +2,9 @@ import { MealStorageDTO } from '@storage/meal/MealStorageDTO';
 
 export class MealSectionListGenerator {
   meals: MealStorageDTO[];
-  dates: string[];
 
   constructor(meals: MealStorageDTO[]) {
     this.meals = meals;
-    this.dates = this.getDates();
   }
 
   generate() {
@@ -20,7 +18,9 @@ export class MealSectionListGenerator {
   }
 
   private sortMealsByDate() {
-    const sorted = this.dates.map(date => {
+    const dates: string[] = this.getDates();
+
+    const sorted = dates.map(date => {
       return {
         date: date,
         data: this.meals
