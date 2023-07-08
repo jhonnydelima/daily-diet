@@ -90,7 +90,7 @@ export function Home() {
         <OpenIcon type={cardButtonType} />
 
         <Description
-          title={dietPercentage.toFixed(2).replace('.', ',') + '%'}
+          title={dietPercentage.toFixed(2).replace('.', ',').replace(/[.,]00$/, "") + '%'}
           subtitle='das refeições dentro da dieta'
         />
       </CardButton>
