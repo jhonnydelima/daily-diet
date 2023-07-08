@@ -15,6 +15,7 @@ type Props = {
   modalText: string;
   cancelButtonText?: string;
   confirmButtonText?: string;
+  isCancelButtonDisabled?: boolean;
   isModalVisible: boolean;
   setModalState: (value: boolean) => void;
   onConfirmPress: () => void;
@@ -24,6 +25,7 @@ export function Modal({
   modalText,
   cancelButtonText = 'Cancelar',
   confirmButtonText = 'Sim',
+  isCancelButtonDisabled = false,
   isModalVisible,
   setModalState,
   onConfirmPress
@@ -47,14 +49,16 @@ export function Modal({
           </ModalTextContainer>
 
           <ModalRow>
-            <ModalButtonContainer>
-              <IconButton
-                type="SECONDARY"
-                description={cancelButtonText}
-                onPress={() => setModalState(false)}
-              />
-            </ModalButtonContainer>
-
+            {!isCancelButtonDisabled && (
+              <ModalButtonContainer>
+                <IconButton
+                  type="SECONDARY"
+                  description={cancelButtonText}
+                  onPress={() => setModalState(false)}
+                />
+              </ModalButtonContainer>
+            )}
+            
             <ModalButtonContainer>
               <IconButton
                 description={confirmButtonText}
