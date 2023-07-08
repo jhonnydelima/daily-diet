@@ -6,9 +6,37 @@ export class StatisticsGenerator {
   mealsOutOfDiet: number;
 
   constructor(meals: MealStorageDTO[]) {
-    this.meals = meals;
+    this.meals = this.sortMeals(meals);
     this.mealsInDiet = meals.filter(meal => meal.type === 'IN_DIET').length;
     this.mealsOutOfDiet = meals.filter(meal => meal.type === 'OUT_OF_DIET').length;
+  }
+
+  private sortMeals(meals: MealStorageDTO[]) {
+    let sorted: MealStorageDTO[] = [];
+
+    const dates: string[] = [...new Set(meals.map(({ date }) => date))].sort();
+  
+    dates.map(
+      date => {
+        return meals
+          .filter(meal => meal.date === date)
+          .sort((a, b) => {
+            if (a.time < b.time) {
+              return -1;
+            }
+
+            if (a.time > a.time) {
+               return 1;
+            }
+                
+            return 0;
+          });
+      }
+    ).map(item => {
+      sorted = [...sorted, ...item];
+    })
+
+    return sorted;
   }
 
   getLongestSequenceInDiet() {
