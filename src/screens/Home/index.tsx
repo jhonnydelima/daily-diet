@@ -10,7 +10,9 @@ import {
   CardButton,
   OpenIcon,
   Label,
-  SectionTitle
+  SectionTitle,
+  EmptyList,
+  EmptyListText
 } from './styles';
 
 import { Description } from '@components/Description';
@@ -83,19 +85,21 @@ export function Home() {
         <Avatar source={avatarImg} />
       </HeaderContainer>
 
-      <CardButton
-        type={cardButtonType}
-        onPress={handleOpenStatistics}
-      >
-        <OpenIcon type={cardButtonType} />
+      {!(meals.length === 0) && (
+        <CardButton
+          type={cardButtonType}
+          onPress={handleOpenStatistics}
+        >
+          <OpenIcon type={cardButtonType} />
 
-        <Description
-          title={dietPercentage.toFixed(2).replace('.', ',').replace(/[.,]00$/, "") + '%'}
-          subtitle='das refeições dentro da dieta'
-        />
-      </CardButton>
+          <Description
+            title={dietPercentage.toFixed(2).replace('.', ',').replace(/[.,]00$/, "") + '%'}
+            subtitle='das refeições dentro da dieta'
+          />
+        </CardButton>
+      )}
 
-      <Label>
+      <Label style={[meals.length === 0 && {marginTop: 0}]}>
         Refeições
       </Label>
 
@@ -124,6 +128,13 @@ export function Home() {
           )}
           ItemSeparatorComponent={() => (
             <View style={{ marginBottom: 12 }} />
+          )}
+          ListEmptyComponent={() => (
+            <EmptyList>
+              <EmptyListText>
+                Comece adicionando uma nova refeição
+              </EmptyListText>
+            </EmptyList>
           )}
         />
       )}
