@@ -5,6 +5,11 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { Body } from '@components/Body';
 import { Header } from '@components/Header';
 import { IconButton } from '@components/IconButton';
+import { Loading } from '@components/Loading';
+import { Modal } from '@components/Modal';
+
+import { mealGetById } from '@storage/meal/mealGetById';
+import { mealRemoveById } from '@storage/meal/mealRemoveById';
 import { MealStorageDTO } from '@storage/meal/MealStorageDTO';
 
 import {
@@ -17,9 +22,6 @@ import {
   TagDescription,
   ButtonsView
 } from './styles';
-import { mealGetById } from '@storage/meal/mealGetById';
-import { Loading } from '@components/Loading';
-import { Modal } from '@components/Modal';
 
 type RouteParams = {
   id: string;
@@ -28,7 +30,8 @@ type RouteParams = {
 export function Meal() {
   const [isLoading, setIsLoading] = useState(true);
   const [meal, setMeal] = useState<MealStorageDTO>();
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isRemoveMealModalVisible, setIsRemoveMealModalVisible] = useState(false);
+  const [isRemovalSucceedModalVisible, setIsRemovalSucceedModalVisible] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
   const { id } = route.params as RouteParams;
@@ -38,13 +41,24 @@ export function Meal() {
   }
 
   async function handleDeleteMeal() {
+    try {
+      await mealRemoveById(id);
+      setIsRemoveMealModalVisible(false);
+      setIsRemovalSucceedModalVisible(true);
+    } catch (error) {
+      Alert.alert("Refeição", "Não foi possível remover a refeição selecionada.");
+      console.log(error);
+    }
+  }
 
+  function handleGoToHome() {
+    setIsRemovalSucceedModalVisible(false);
+    navigation.navigate('home');
   }
 
   async function fetchMeal() {
     try {
       setIsLoading(true);
-
       const meal = await mealGetById(id);
       setMeal(meal);
     } catch (error) {
@@ -57,7 +71,7 @@ export function Meal() {
 
   useEffect(() => {
     fetchMeal();
-  }, [])
+  }, []);
 
   return (
     <Container>
@@ -109,16 +123,25 @@ export function Meal() {
                   type='SECONDARY'
                   icon='delete-outline'
                   description='Excluir refeição'
-                  onPress={() => setIsModalVisible(true)}
+                  onPress={() => setIsRemoveMealModalVisible(true)}
                 />
               </ButtonsView>
 
               <Modal
                 modalText="Deseja realmente excluir o registro da refeição?"
                 confirmButtonText="Sim, excluir"
-                isModalVisible={isModalVisible}
-                setModalState={setIsModalVisible}
+                isModalVisible={isRemoveMealModalVisible}
+                setModalState={setIsRemoveMealModalVisible}
                 onConfirmPress={handleDeleteMeal}
+              />
+
+              <Modal
+                modalText="Refeição excluída com sucesso!"
+                confirmButtonText="Voltar à Home"
+                isCancelButtonDisabled={true}
+                isModalVisible={isRemovalSucceedModalVisible}
+                setModalState={setIsRemovalSucceedModalVisible}
+                onConfirmPress={handleGoToHome}
               />
             </>
           )}
