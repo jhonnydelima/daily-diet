@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Alert } from 'react-native';
+import { Alert, Platform, View } from 'react-native';
 
 import { Body } from '@components/Body';
 import { Description } from '@components/Description';
@@ -51,14 +51,18 @@ export function Statistics() {
             backgroundType={headerType}
             iconType={headerType}
           >
-            <Description
-              title={percentageInDiet.toFixed(2).replace('.', ',').replace(/[.,]00$/, "") + '%'}
-              subtitle='das refeições dentro da dieta'
-            />
+            <View
+              style={[Platform.OS === 'android' && {marginBottom: 32}]}
+            >
+              <Description
+                title={percentageInDiet.toFixed(2).replace('.', ',').replace(/[.,]00$/, "") + '%'}
+                subtitle='das refeições dentro da dieta'
+              />
+            </View>
           </Header>
 
           <Body>
-            <Title>
+            <Title style={[Platform.OS === 'android' && {marginTop: 16}]}>
               Estatísticas gerais
             </Title>
 

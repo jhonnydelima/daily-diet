@@ -11,6 +11,9 @@ export const Title = styled.Text`
     font-family: ${theme.FONT_FAMILY.BOLD};
   `}
 
+  width: 100%;
+  text-align: center;
+
   margin-top: 32px;
   margin-bottom: 24px;
 `;
