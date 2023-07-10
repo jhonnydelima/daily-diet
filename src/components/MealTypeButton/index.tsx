@@ -1,16 +1,21 @@
-import { TouchableOpacityProps } from 'react-native';
+import { Dispatch, SetStateAction } from 'react';
 
 import { MealTypeButtonTypeStyleProps, Container, Icon, Title } from './styles';
 
-type Props = TouchableOpacityProps & {
+type Props = {
   title: string;
   type?: MealTypeButtonTypeStyleProps;
   isActive: boolean;
+  setState: Dispatch<SetStateAction<MealTypeButtonTypeStyleProps>>;
 }
 
-export function MealTypeButton({ title, type, isActive, ...rest }: Props) {
+export function MealTypeButton({ title, type, isActive, setState }: Props) {
   return (
-    <Container type={type} isActive={isActive} {...rest}>
+    <Container
+      type={type}
+      isActive={isActive}
+      onPress={() => setState(type)}
+    >
       <Icon type={type} />
 
       <Title>

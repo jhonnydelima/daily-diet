@@ -1,4 +1,3 @@
-import { TouchableOpacity } from 'react-native';
 import styled, { css } from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -9,7 +8,7 @@ type Props = {
   isActive: boolean;
 }
 
-export const Container = styled(TouchableOpacity)<Props>`
+export const Container = styled.TouchableOpacity<Props>`
   flex: 1;
   flex-direction: row;
 
@@ -19,7 +18,7 @@ export const Container = styled(TouchableOpacity)<Props>`
   min-height: 48px;
   max-height: 48px;
   border-radius: 6px;
-  border-width: ${({ type, isActive }) => isActive && type !== undefined && 1}px;
+  border-width: ${({ isActive }) => !isActive ? 0 : 1}px;
 
   ${({ theme, type, isActive }) => css`
     background-color: ${
