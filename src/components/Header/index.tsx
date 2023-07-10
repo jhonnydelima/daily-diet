@@ -1,6 +1,14 @@
+import { Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { HeaderTypeStyleProps, Container, Content, BackButton, BackIcon, Title } from './styles';
+import {
+  HeaderTypeStyleProps,
+  Container,
+  Content,
+  BackButton,
+  BackIcon,
+  Title
+} from './styles';
 
 type Props = {
   backgroundType?: HeaderTypeStyleProps;
@@ -17,7 +25,10 @@ export function Header({ backgroundType = 'PRIMARY', iconType = 'PRIMARY', title
   }
 
   return (
-    <Container type={backgroundType}>
+    <Container
+      type={backgroundType}
+      style={[Platform.OS === 'android' && {minHeight: 104}]}
+    >
       <Content>
         <BackButton onPress={handleGoHome}>
           <BackIcon type={iconType} />
@@ -28,9 +39,9 @@ export function Header({ backgroundType = 'PRIMARY', iconType = 'PRIMARY', title
             {title}
           </Title>
         )}
-      </Content>
 
-      {children}
+        {children}
+      </Content>
     </Container>
   );
 }

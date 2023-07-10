@@ -9,7 +9,7 @@ type Props = {
 }
 
 export const Container = styled(SafeAreaView)<Props>`
-  padding: 0 24px;
+  padding: 16px 24px 0px;
   background-color: ${
     ({ theme, type }) => (
       type === 'PRIMARY' ? theme.COLORS.GREEN_LIGHT :
@@ -19,10 +19,7 @@ export const Container = styled(SafeAreaView)<Props>`
   };
 `;
 
-export const Content = styled.View`
-  flex: 1;
-  margin-bottom: 24px;
-`;
+export const Content = styled.View``;
 
 export const BackButton = styled.TouchableOpacity`
   width: 25%;
