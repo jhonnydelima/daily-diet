@@ -5,6 +5,7 @@ import { Container } from './styles';
 export function DescriptionInput({ ...rest }: TextInputProps) {
   return (
     <Container
+      textAlignVertical='top'
       autoCorrect={false}
       multiline
       numberOfLines={3}
