@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { Container } from './styles';
 
 type Props = {
@@ -6,7 +7,9 @@ type Props = {
 
 export function Body({ children }: Props) {
   return (
-    <Container>
+    <Container
+      style={[Platform.OS === 'android' && {paddingTop: 16}]}
+    >
       {children}
     </Container>
   );
