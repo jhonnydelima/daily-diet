@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Alert, SectionList, TouchableOpacity, View } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
@@ -23,6 +23,9 @@ import { MealCard } from '@components/MealCard';
 
 import { mealGetAll } from '@storage/meal/mealGetAll';
 import { MealStorageDTO } from '@storage/meal/MealStorageDTO';
+import { profile } from '@storage/profile/profile';
+import { profileCreate } from '@storage/profile/profileCreate';
+import { ProfileStorageDTO } from '@storage/profile/ProfileStorageDTO';
 import { MealSectionListGenerator } from '@utils/MealSectionListGenerator';
 import { StatisticsGenerator } from '@utils/StatisticsGenerator';
 
@@ -38,21 +41,21 @@ export function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [meals, setMeals] = useState<MealType[]>([]);
   const [dietPercentage, setDietPercentage] = useState(0);
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<ProfileStorageDTO>();
 
-  // const [cameraPermissionInformation, requestPermission] = ImagePicker.useCameraPermissions();
-  const [mediaLibraryPermissions, requestPermission] = ImagePicker.useMediaLibraryPermissions();
+  // const [cameraPermission, requestPermission] = ImagePicker.useCameraPermissions();
+  const [mediaLibraryPermission, requestPermission] = ImagePicker.useMediaLibraryPermissions();
   const navigation = useNavigation();
   const cardButtonType = dietPercentage > 50 ? 'PRIMARY' : 'SECONDARY';
 
-  // VERIFY CAMERA PERMISSIONS
+  // VERIFY CAMERA PERMISSION
   // async function verifyPermission() {
-  //   if (cameraPermissionInformation?.status === ImagePicker.PermissionStatus.UNDETERMINED) {
+  //   if (cameraPermission?.status === ImagePicker.PermissionStatus.UNDETERMINED) {
   //       const permissionResponse = await requestPermission();
 
   //       return permissionResponse.granted;
   //   }
-  //   if (cameraPermissionInformation?.status === ImagePicker.PermissionStatus.DENIED) {
+  //   if (cameraPermission?.status === ImagePicker.PermissionStatus.DENIED) {
   //       Alert.alert(
   //           "Permissão negada!",
   //           "Para prosseguir você deve permitir acesso à câmera do seu dispositivo."
@@ -64,49 +67,56 @@ export function Home() {
   // }
 
   async function verifyPermission() {
-    if (mediaLibraryPermissions?.status === ImagePicker.PermissionStatus.UNDETERMINED) {
-        const permissionResponse = await requestPermission();
+    if (mediaLibraryPermission?.status === ImagePicker.PermissionStatus.UNDETERMINED) {
+      const permissionResponse = await requestPermission();
 
-        return permissionResponse.granted;
+      return permissionResponse.granted;
     }
 
-    if (mediaLibraryPermissions?.status === ImagePicker.PermissionStatus.DENIED) {
-        Alert.alert(
-            "Permissão negada!",
-            "Para prosseguir você deve permitir acesso à galeria do seu dispositivo."
-        );
-        return false;
+    if (mediaLibraryPermission?.status === ImagePicker.PermissionStatus.DENIED) {
+      Alert.alert(
+        "Permissão negada!",
+        "Para prosseguir você deve permitir acesso à galeria do seu dispositivo."
+      );
+        
+      return false;
     }
 
     return true;
   }
 
   async function pickImage() {
-    const hasPermission = await verifyPermission();
-    
-    if (!hasPermission) {
+    try {
+      const hasPermission = await verifyPermission();
+
+      if (!hasPermission) {
         return;
-    }
-    
-    // OPEN PHONE CAMERA TO TAKE THE PICTURE
-    // const image = await ImagePicker.launchCameraAsync({
-    //     allowsEditing:true,
-    //     aspect:[16,9],
-    //     quality:0.5
-    // });
-    // setImage(image.assets)
+      }
+      
+      // OPEN PHONE CAMERA TO TAKE THE PICTURE
+      // const image = await ImagePicker.launchCameraAsync({
+      //     allowsEditing:true,
+      //     aspect:[16,9],
+      //     quality:0.5
+      // });
 
-    const image = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+      const image = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
 
-    console.log(image.assets);
+      if (image.assets?.length !== 0) {
+        const newProfile: ProfileStorageDTO = {
+          avatar: image.assets?.[0].uri
+        }
 
-    if (image.assets?.length !== 0) {
-      setImage(image.assets?.[0].uri || null);
+        await profileCreate(newProfile)
+        await fetchProfileImage();
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -140,6 +150,19 @@ export function Home() {
     }
   }
 
+  async function fetchProfileImage() {
+    try {
+      const image = await profile();
+      setImage(image);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchProfileImage();
+  }, []);
+
   useFocusEffect(
     useCallback(() => {
       fetchMeals();
@@ -152,7 +175,7 @@ export function Home() {
         <Logo source={logoImg} />
 
         <TouchableOpacity onPress={pickImage}>
-          <Avatar source={image ? { uri: image } : avatar} />
+          <Avatar source={image ? { uri: image.avatar } : avatar} />
         </TouchableOpacity>
       </HeaderContainer>
 
