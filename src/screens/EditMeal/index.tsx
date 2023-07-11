@@ -4,7 +4,6 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import uuid from 'react-native-uuid';
 import { object, string, mixed } from 'yup';
 
 import {
@@ -89,7 +88,7 @@ export function EditMeal() {
   async function handleSaveChanges() {
     try {
       const newMeal = {
-        id: uuid.v4().toString(),
+        id,
         name,
         description,
         date,
@@ -105,7 +104,7 @@ export function EditMeal() {
       await mealRemoveById(id);
       await mealCreate(parsedMeal);
 
-      navigation.navigate('home');
+      navigation.goBack();
     } catch (error) {
       Alert.alert("Refeição", error.message);
       console.log(error);
